@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Order - Pancake Souffle</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #f48fb1;
+        --primary-dark: #d81b60;
+        --secondary: #f9f5ec;
+        --text-dark: #4a4a4a;
+        --text-light: #8a8a8a;
+        --white: #ffffff;
+        --success: #25d366;
+        --backdrop: rgba(0, 0, 0, 0.6);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Quicksand", sans-serif;
+        background-color: var(--secondary);
+        color: var(--text-dark);
+        line-height: 1.6;
+        /* CRITICAL FOR MOBILE: Removes tap delay & highlight */
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* === NAVBAR === */
+      .navbar {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 1rem 5%;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-family: "Pacifico", cursive;
+        font-size: 1.5rem;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .back-btn {
+        text-decoration: none;
+        color: var(--text-dark);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.3s;
+        padding: 8px 15px;
+        border-radius: 20px;
+      }
+
+      .back-btn:hover {
+        background-color: #ffeef5;
+        color: var(--primary);
+      }
+
+      /* === CONTAINER === */
+      .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .page-title {
+        text-align: center;
+        margin-bottom: 2rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+      }
+
+      .page-title h1 {
+        color: var(--primary);
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      /* === ORDER CARD === */
+      .order-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px rgba(244, 143, 177, 0.1);
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 3rem;
+      }
+
+      .section-header {
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+        color: var(--primary);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 2px solid #f9f5ec;
+        padding-bottom: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #666;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #f0f0f0;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: 0.3s;
+        background: #fdfdfd;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary);
+        background: white;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(244, 143, 177, 0.1);
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .menu-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.2rem;
+        padding: 1rem;
+        border: 1px solid #f0f0f0;
+        border-radius: 15px;
+        transition: 0.3s;
+      }
+
+      .menu-item:hover {
+        border-color: var(--primary);
+        background: #fff0f5;
+      }
+
+      .item-info {
+        flex: 1;
+      }
+
+      .item-name {
+        font-weight: 700;
+        display: block;
+        font-size: 1.1rem;
+      }
+
+      .item-price {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      .item-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: white;
+        padding: 5px;
+        border-radius: 50px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      /* BUTTON FIX FOR MOBILE */
+      .qty-btn {
+        background: #f0f0f0;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        color: var(--text-dark);
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        /* Critical for responsive touch */
+        touch-action: manipulation;
+        user-select: none;
+      }
+
+      .qty-btn:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      .qty-btn:active {
+        transform: scale(0.95);
+      }
+
+      .qty-display {
+        font-weight: 700;
+        width: 25px;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+
+      .total-section {
+        grid-column: 1 / -1;
+        background: #fff0f5;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-top: 1rem;
+        border: 1px dashed var(--primary);
+        text-align: center;
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1.5rem;
+      }
+
+      .total-price {
+        color: var(--primary-dark);
+        font-size: 1.8rem;
+      }
+
+      .btn-checkout {
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(135deg, var(--primary) 0%, #d81b60 100%);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 10px 25px rgba(216, 27, 96, 0.3);
+      }
+
+      .btn-checkout:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(216, 27, 96, 0.4);
+      }
+
+      .btn-checkout:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      /* === MODAL SYSTEM === */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--backdrop);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        padding: 20px;
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-box {
+        background: white;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 20px;
+        padding: 2rem;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-overlay.active .modal-box {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-header h2 {
+        color: var(--primary-dark);
+        font-size: 1.5rem;
+      }
+
+      .order-summary-box {
+        background: #f9f5ec;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px dashed #ddd;
+        padding-bottom: 0.5rem;
+      }
+
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--primary-dark);
+        margin-top: 1rem;
+        border-top: 2px solid #ddd;
+        padding-top: 1rem;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn-modal {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .btn-cancel {
+        background: #f0f0f0;
+        color: #666;
+      }
+
+      .btn-confirm {
+        background: var(--primary);
+        color: white;
+      }
+
+      .fallback-area {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        background: #fafafa;
+      }
+
+      .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--primary);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+        display: none;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* === MOBILE RESPONSIVE === */
+      @media (max-width: 768px) {
+        .navbar { padding: 0.8rem 1rem; }
+        .container { padding: 0 1rem; margin: 1.5rem auto; }
+        .page-title { padding: 1.5rem; margin-bottom: 1.5rem; }
+        .page-title h1 { font-size: 1.6rem; }
+        
+        .order-card {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 1.5rem;
+        }
+
+        .menu-selection { order: -1; }
+
+        .menu-item {
+            padding: 1rem;
+            background: #fafafa;
+            border-radius: 15px;
+        }
+
+        /* BIGGER BUTTONS FOR MOBILE FINGERS */
+        .item-controls {
+            gap: 15px;
+            padding: 8px 12px;
+        }
+
+        .qty-btn {
+            width: 44px;
+            height: 44px;
+            font-size: 1.4rem;
+            background: #f5f5f5;
+        }
+        
+        .qty-display {
+            width: 30px;
+            font-size: 1.2rem;
+        }
+
+        .total-price { font-size: 1.5rem; }
+        .btn-checkout { font-size: 1rem; padding: 15px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Kembali ke Home
+      </a>
+      <a href="index.html" class="logo">Pancake Souffle</a>
+    </nav>
+
+    <div class="container">
+      <div class="page-title">
+        <h1>
+          Form Pemesanan
+          <i class="fa-solid fa-utensils" style="font-size: 0.8em; color: var(--primary)"></i>
+        </h1>
+        <p>Isi data di bawah ini</p>
+      </div>
+
+      <div class="order-card">
+        
+        <div class="menu-selection">
+          <div class="section-header">
+            <i class="fa-solid fa-list-check"></i> Pilih Menu
+          </div>
+
+          <div class="menu-item">
+            <div class="item-info">
+              <span class="item-name">Strawberry Cloud</span>
+              <span class="item-price">Rp15.000</span>
+            </div>
+            <div class="item-controls">
+              <button type="button" class="qty-btn" data-action="update" data-item="stroberi" data-change="-1">-</button>
+              <span id="qty-stroberi" class="qty-display">0</span>
+              <button type="button" class="qty-btn" data-action="update" data-item="stroberi" data-change="1">+</button>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-info">
+              <span class="item-name">Tiramisu Delight</span>
+              <span class="item-price">Rp18.000</span>
+            </div>
+            <div class="item-controls">
+              <button type="button" class="qty-btn" data-action="update" data-item="tiramisu" data-change="-1">-</button>
+              <span id="qty-tiramisu" class="qty-display">0</span>
+              <button type="button" class="qty-btn" data-action="update" data-item="tiramisu" data-change="1">+</button>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <i class="fa-solid fa-address-card"></i> Data Pengiriman
+          </div>
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="nama" class="form-control" placeholder="Contoh: Ghusty" />
+          </div>
+          <div class="form-group">
+            <label>Alamat Lengkap</label>
+            <textarea id="alamat" class="form-control" placeholder="Nama Jalan, RT/RW, Patokan..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Catatan (Opsional)</label>
+            <input type="text" id="catatan" class="form-control" placeholder="Contoh: Jangan terlalu manis..." />
+          </div>
+        </div>
+
+        <div class="total-section">
+          <div class="total-row">
+            <span>Total Pembayaran:</span>
+            <span class="total-price" id="total-display">Rp0</span>
+          </div>
+          <button id="btn-submit" type="button" class="btn-checkout">
+            <i class="fa-solid fa-paper-plane"></i> Lanjut ke Konfirmasi
+          </button>
+          <p style="text-align: center; font-size: 0.85rem; margin-top: 15px; color: #888;">
+            <i class="fa-solid fa-lock"></i> Pesanan diproses otomatis via WhatsApp.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="confirm-modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2>Konfirmasi Pesanan</h2>
+          <p style="font-size: 0.9rem; color: #666">Mohon cek kembali sebelum mengirim.</p>
+        </div>
+
+        <div id="order-summary" class="order-summary-box"></div>
+        <div class="loading-spinner" id="loading-spinner"></div>
+
+        <div class="modal-buttons" id="modal-actions">
+          <button type="button" class="btn-modal btn-cancel" data-action="closeModal">Ubah</button>
+          <button type="button" class="btn-modal btn-confirm" data-action="processOrder">
+            <i class="fa-brands fa-whatsapp"></i> Kirim Pesanan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="fallback-modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2 style="color: #25d366"><i class="fa-brands fa-whatsapp"></i> Buka WhatsApp</h2>
+          <p style="font-size: 0.9rem">Jika WhatsApp tidak terbuka otomatis, salin pesan di bawah ini dan kirim manual.</p>
+        </div>
+
+        <textarea id="fallback-msg" class="fallback-area" readonly></textarea>
+
+        <div class="modal-buttons">
+          <button type="button" class="btn-modal btn-cancel" data-action="copyMessage">
+            <i class="fa-regular fa-copy"></i> Salin
+          </button>
+          <button type="button" class="btn-modal btn-confirm" data-action="forceOpenWA">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka WA
+          </button>
+        </div>
+        <div style="text-align: center; margin-top: 10px">
+          <button type="button" data-action="closeFallback" style="background: none; border: none; color: #888; text-decoration: underline; cursor: pointer;">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * SYSTEM LEVEL 4: SMART ORDER CONTROLLER
+       * Mobile Compatible (Event Delegation)
+       */
+      const app = {
+        config: {
+          adminWA: "6282299827792", 
+          prices: { stroberi: 15000, tiramisu: 18000 },
+        },
+
+        state: {
+          qty: { stroberi: 0, tiramisu: 0 },
+          customer: { nama: "", alamat: "", catatan: "" },
+          orderID: "",
+          timestamp: "",
+          finalMessage: "",
+        },
+
+        init: function () {
+          this.loadDraft();
+          this.setupEventListeners(); // NEW: Central Event Handler
+          this.updateUI();
+        },
+
+        // --- CORE: Event Listener Setup (Fixes Mobile Scope Issues) ---
+        setupEventListeners: function() {
+            // Global Click Handler (Event Delegation)
+            document.addEventListener('click', (e) => {
+                // Find nearest button if user clicked icon/span inside
+                const target = e.target.closest('button');
+                if(!target) return;
+
+                const action = target.dataset.action;
+
+                // Handle Qty Buttons
+                if(action === 'update') {
+                    const item = target.dataset.item;
+                    const change = parseInt(target.dataset.change);
+                    this.updateQty(item, change);
+                }
+
+                // Handle Modals & Checkout
+                else if(target.id === 'btn-submit') this.preCheckout();
+                else if(action === 'closeModal') this.closeModal();
+                else if(action === 'processOrder') this.processOrder();
+                else if(action === 'copyMessage') this.copyMessage();
+                else if(action === 'forceOpenWA') this.forceOpenWA();
+                else if(action === 'closeFallback') this.closeFallback();
+            });
+
+            // Input Listeners for Draft Saving
+            ['nama', 'alamat', 'catatan'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.addEventListener('input', () => this.saveDraft());
+            });
+        },
+
+        updateQty: function (item, change) {
+          if (this.state.qty[item] + change >= 0) {
+            this.state.qty[item] += change;
+            this.updateUI();
+            this.saveDraft();
+          }
+        },
+
+        calculateTotal: function () {
+          return (
+            this.state.qty.stroberi * this.config.prices.stroberi +
+            this.state.qty.tiramisu * this.config.prices.tiramisu
+          );
+        },
+
+        updateUI: function () {
+          document.getElementById("qty-stroberi").innerText = this.state.qty.stroberi;
+          document.getElementById("qty-tiramisu").innerText = this.state.qty.tiramisu;
+
+          const total = this.calculateTotal();
+          document.getElementById("total-display").innerText = "Rp" + total.toLocaleString("id-ID");
+
+          const btn = document.getElementById("btn-submit");
+          if (total === 0) {
+            btn.disabled = true;
+            btn.style.opacity = "0.6";
+          } else {
+            btn.disabled = false;
+            btn.style.opacity = "1";
+          }
+        },
+
+        saveDraft: function () {
+          this.state.customer.nama = document.getElementById("nama").value;
+          this.state.customer.alamat = document.getElementById("alamat").value;
+          this.state.customer.catatan = document.getElementById("catatan").value;
+          localStorage.setItem("ps_order_draft", JSON.stringify(this.state));
+        },
+
+        loadDraft: function () {
+          const saved = localStorage.getItem("ps_order_draft");
+          if (saved) {
+            const data = JSON.parse(saved);
+            this.state.qty = data.qty || { stroberi: 0, tiramisu: 0 };
+            if (data.customer) {
+              document.getElementById("nama").value = data.customer.nama || "";
+              document.getElementById("alamat").value = data.customer.alamat || "";
+              document.getElementById("catatan").value = data.customer.catatan || "";
+            }
+          }
+        },
+
+        preCheckout: function () {
+          this.saveDraft();
+          const { nama, alamat } = this.state.customer;
+
+          if (!nama.trim() || !alamat.trim()) {
+            alert("Mohon lengkapi Nama dan Alamat pengiriman dulu ya!");
+            return;
+          }
+
+          const now = new Date();
+          this.state.orderID = `PS-${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, "0")}${now.getDate().toString().padStart(2, "0")}-${Math.floor(Math.random() * 1000).toString().padStart(3, "0")}`;
+          this.state.timestamp = now.toLocaleString("id-ID");
+
+          this.renderConfirmation();
+          document.getElementById("confirm-modal").classList.add("active");
+        },
+
+        renderConfirmation: function () {
+          let html = `
+                <div style="border-bottom:1px solid #ddd; padding-bottom:10px; margin-bottom:10px;">
+                    <strong>ID Pesanan:</strong> ${this.state.orderID}<br>
+                    <strong>Waktu:</strong> ${this.state.timestamp}
+                </div>
+                <div style="margin-bottom:15px;">
+                    <strong>Penerima:</strong><br>
+                    ${this.state.customer.nama}<br>
+                    <small>${this.state.customer.alamat}</small>
+                </div>
+                <div><strong>Detail Menu:</strong></div>
+            `;
+
+          if (this.state.qty.stroberi > 0) html += `<div class="summary-row"><span>Strawberry Cloud x${this.state.qty.stroberi}</span><span>Rp${(this.state.qty.stroberi * this.config.prices.stroberi).toLocaleString()}</span></div>`;
+          if (this.state.qty.tiramisu > 0) html += `<div class="summary-row"><span>Tiramisu Delight x${this.state.qty.tiramisu}</span><span>Rp${(this.state.qty.tiramisu * this.config.prices.tiramisu).toLocaleString()}</span></div>`;
+
+          if (this.state.customer.catatan) {
+            html += `<div style="margin-top:10px; font-style:italic; color:#666;">"Catatan: ${this.state.customer.catatan}"</div>`;
+          }
+
+          html += `<div class="summary-total"><span>TOTAL BAYAR</span><span>Rp${this.calculateTotal().toLocaleString("id-ID")}</span></div>`;
+          document.getElementById("order-summary").innerHTML = html;
+        },
+
+        processOrder: function () {
+          document.getElementById("loading-spinner").style.display = "block";
+          document.getElementById("modal-actions").style.display = "none";
+
+          let msg = `INVOICE ORDER\n`;
+          msg += `--------------------------------\n`;
+          msg += `ID: ${this.state.orderID}\n`;
+          msg += `Tanggal: ${this.state.timestamp}\n`;
+          msg += `--------------------------------\n`;
+          msg += `DATA PELANGGAN\n`;
+          msg += `Nama: ${this.state.customer.nama}\n`;
+          msg += `Alamat: ${this.state.customer.alamat}\n`;
+          if (this.state.customer.catatan) msg += `Catatan: ${this.state.customer.catatan}\n`;
+          msg += `--------------------------------\n`;
+          msg += `DETAIL PESANAN\n`;
+
+          if (this.state.qty.stroberi > 0) msg += `[${this.state.qty.stroberi}x] Strawberry Cloud @Rp${this.config.prices.stroberi / 1000}k\n`;
+          if (this.state.qty.tiramisu > 0) msg += `[${this.state.qty.tiramisu}x] Tiramisu Delight @Rp${this.config.prices.tiramisu / 1000}k\n`;
+
+          msg += `--------------------------------\n`;
+          msg += `TOTAL: Rp${this.calculateTotal().toLocaleString("id-ID")}\n`;
+          msg += `--------------------------------\n`;
+          msg += `Mohon diproses, Terima kasih.`;
+
+          this.state.finalMessage = msg;
+
+          setTimeout(() => {
+            const url = `https://wa.me/${this.config.adminWA}?text=${encodeURIComponent(msg)}`;
+            window.open(url, "_blank");
+            this.closeModal();
+            this.showFallback();
+            localStorage.removeItem("ps_order_draft");
+          }, 1500);
+        },
+
+        closeModal: function () {
+          document.getElementById("confirm-modal").classList.remove("active");
+          document.getElementById("loading-spinner").style.display = "none";
+          document.getElementById("modal-actions").style.display = "flex";
+        },
+
+        showFallback: function () {
+          document.getElementById("fallback-msg").value = this.state.finalMessage;
+          document.getElementById("fallback-modal").classList.add("active");
+        },
+
+        closeFallback: function () {
+          document.getElementById("fallback-modal").classList.remove("active");
+          if (confirm("Bersihkan formulir untuk pesanan baru?")) {
+            location.reload();
+          }
+        },
+
+        copyMessage: function () {
+          const textarea = document.getElementById("fallback-msg");
+          textarea.select();
+          document.execCommand("copy");
+          if (navigator.clipboard) navigator.clipboard.writeText(textarea.value);
+          alert("Pesan berhasil disalin! Silakan tempel di WhatsApp.");
+        },
+
+        forceOpenWA: function () {
+          const url = `https://wa.me/${this.config.adminWA}?text=${encodeURIComponent(this.state.finalMessage)}`;
+          window.open(url, "_blank");
+        },
+      };
+
+      document.addEventListener("DOMContentLoaded", () => app.init());
+    </script>
+  </body>
+</html>

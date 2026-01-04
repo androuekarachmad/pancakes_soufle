@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Pancake Souffle Fakfak - Lembut, Manis, Bikin Good Mood! Pancake Jepang premium dengan rasa Strawberry dan Tiramisu.">
+    <title>Pancake Souffle - Fluffy Happiness!</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #f48fb1;
+        --primary-dark: #d81b60;
+        --secondary: #f9f5ec;
+        --accent: #ffc107;
+        --text-dark: #4a4a4a;
+        --text-light: #8a8a8a;
+        --white: #ffffff;
+        --shadow: 0 10px 30px rgba(244, 143, 177, 0.15);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Quicksand", sans-serif;
+        background-color: var(--secondary);
+        color: var(--text-dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* === NAVBAR === */
+      .navbar {
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 0.8rem 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+        transition: padding 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        padding: 0.5rem 0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .logo-img {
+        height: 40px;
+        width: auto;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover .logo-img {
+        transform: rotate(10deg);
+      }
+
+      .logo-text {
+        font-family: "Pacifico", cursive;
+        font-size: 1.6rem;
+        color: var(--primary);
+        text-shadow: 2px 2px 0px rgba(244, 143, 177, 0.2);
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-menu a {
+        text-decoration: none;
+        color: var(--text-dark);
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        padding-bottom: 5px;
+      }
+
+      .nav-menu a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu a:hover::after {
+        width: 100%;
+      }
+
+      .nav-menu a:hover {
+        color: var(--primary);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .btn-order-nav {
+        background-color: var(--primary);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 15px rgba(244, 143, 177, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 2px solid transparent;
+      }
+
+      .btn-order-nav:hover {
+        background-color: transparent;
+        color: var(--primary);
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(244, 143, 177, 0.4);
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-dark);
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 120px 5% 140px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(circle at top right, #fff0f5 0%, transparent 40%),
+                    radial-gradient(circle at bottom left, #fff0f5 0%, transparent 40%);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: linear-gradient(135deg, #ffeef5, #fff);
+        border-radius: 50%;
+        top: -200px;
+        right: -100px;
+        z-index: -1;
+        filter: blur(80px);
+        animation: floatBlob 8s infinite alternate;
+      }
+
+      @keyframes floatBlob {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(-30px, 30px); }
+      }
+
+      .hero h1 {
+        font-size: 3.8rem;
+        color: var(--text-dark);
+        margin-bottom: 1.2rem;
+        font-weight: 800;
+        line-height: 1.2;
+        animation: fadeInUp 0.8s ease;
+      }
+
+      .hero h1 span {
+        color: var(--primary);
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        color: var(--text-light);
+        margin-bottom: 2.5rem;
+        max-width: 650px;
+        margin: 0 auto 2.5rem;
+        animation: fadeInUp 1s ease;
+      }
+
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 18px 50px;
+        background: linear-gradient(135deg, var(--primary) 0%, #f06292 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        box-shadow: 0 10px 25px rgba(244, 143, 177, 0.4);
+        transition: all 0.3s ease;
+        animation: fadeInUp 1.2s ease;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(244, 143, 177, 0.5);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* GENERAL SECTION STYLES */
+      .section-padding {
+        padding: 100px 5%;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.8rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        font-weight: 800;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        display: block;
+        font-size: 0.9rem;
+      }
+
+      /* === ABOUT US SECTION === */
+      .about-section {
+        background: white;
+      }
+
+      .about-container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .about-row {
+        display: flex;
+        align-items: center;
+        gap: 5rem;
+        margin-bottom: 5rem;
+      }
+
+      .about-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .about-row.reverse {
+        flex-direction: row-reverse;
+      }
+
+      .about-content {
+        flex: 1;
+        text-align: left;
+      }
+
+      .about-content h3 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1.2rem;
+        font-family: "Pacifico", cursive;
+      }
+
+      .about-content p {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+        line-height: 1.9;
+      }
+
+      .about-image {
+        flex: 1;
+        position: relative;
+      }
+
+      .about-image img {
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 20px 20px 0px rgba(244, 143, 177, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .about-image:hover img {
+        transform: scale(1.03);
+        box-shadow: 25px 25px 0px rgba(244, 143, 177, 0.3);
+      }
+
+      /* === MENU SECTION === */
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 3rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .menu-card {
+        background: var(--white);
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s ease;
+        position: relative;
+        border: 1px solid rgba(244, 143, 177, 0.1);
+      }
+
+      .menu-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .card-image-wrapper {
+        height: 280px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .menu-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .menu-card:hover .menu-image {
+        transform: scale(1.15);
+      }
+
+      .badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: var(--accent);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+
+      .card-content {
+        padding: 2.5rem;
+        text-align: center;
+      }
+
+      .menu-card h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+        color: var(--text-dark);
+      }
+
+      .price {
+        font-size: 1.6rem;
+        color: var(--primary);
+        font-weight: 800;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .card-content p {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .btn-small {
+        padding: 12px 30px;
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s;
+        display: inline-block;
+        font-size: 0.95rem;
+      }
+
+      .menu-card:hover .btn-small {
+        background: var(--primary);
+        color: white;
+        transform: scale(1.05);
+      }
+
+      /* === TEAM SECTION === */
+      .team {
+        background: #fff;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 3rem;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .team-card {
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .team-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .team-photo-wrapper {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 1.5rem;
+        position: relative;
+      }
+
+      .team-photo-wrapper::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 3px solid var(--primary);
+        opacity: 0;
+        transform: scale(1.1);
+        transition: all 0.3s ease;
+      }
+
+      .team-card:hover .team-photo-wrapper::before {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+
+      .team-photo {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--secondary);
+        transition: all 0.3s ease;
+      }
+
+      .team-card:hover .team-photo {
+        transform: scale(1.05);
+        border-color: var(--primary);
+      }
+
+      .team-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+      }
+
+      .team-role {
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+      }
+
+      /* === CONTACT SECTION === */
+      .contact {
+        background: linear-gradient(135deg, #fff0f5 0%, #f9f5ec 100%);
+        border-radius: 50px 50px 0 0;
+        margin-top: 50px;
+        text-align: center;
+      }
+
+      .contact h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .contact-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .contact-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 20px 45px;
+        border-radius: 15px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .contact-btn.instagram {
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      }
+
+      .contact-btn.whatsapp {
+        background: #25d366;
+      }
+
+      .contact-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      }
+
+      /* === FOOTER === */
+      .footer {
+        background: #1a1a1a;
+        color: #b0b0b0;
+        padding: 80px 0 30px;
+        font-size: 0.95rem;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1.5fr 1fr;
+        gap: 50px;
+        margin-bottom: 50px;
+      }
+
+      .footer-logo {
+        font-family: "Pacifico", cursive;
+        font-size: 2.2rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      .footer-desc {
+        line-height: 1.8;
+        max-width: 350px;
+      }
+
+      .footer-col h4 {
+        color: #fff;
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+        font-weight: 700;
+      }
+
+      .contact-list {
+        list-style: none;
+      }
+
+      .contact-list li {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 18px;
+        align-items: flex-start;
+        transition: color 0.3s ease;
+      }
+
+      .contact-list li:hover {
+        color: var(--primary);
+      }
+
+      .contact-list i {
+        color: var(--primary);
+        font-size: 1.1rem;
+        margin-top: 4px;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 15px;
+      }
+
+      .footer-links a {
+        color: #b0b0b0;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        display: inline-block;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        padding-left: 5px;
+      }
+
+      .footer-divider {
+        border: 0;
+        border-top: 1px solid #333;
+        margin-bottom: 30px;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      /* === SCROLL TO TOP BUTTON === */
+      .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--primary);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(244, 143, 177, 0.4);
+        z-index: 999;
+      }
+
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(244, 143, 177, 0.6);
+      }
+
+      /* Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ========================================= */
+      /* === MOBILE RESPONSIVE === */
+      /* ========================================= */
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 0.8rem 1rem;
+        }
+
+        .logo-text {
+          font-size: 1.3rem;
+        }
+
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          left: -100%;
+          top: 65px;
+          flex-direction: column;
+          background-color: white;
+          width: 100%;
+          text-align: center;
+          padding: 2rem 0;
+          transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          left: 0;
+        }
+
+        .btn-order-nav span {
+          display: none;
+        }
+        .btn-order-nav {
+          padding: 10px;
+          border-radius: 50%;
+          width: 42px;
+          height: 42px;
+          justify-content: center;
+        }
+
+        .section-padding {
+          padding: 70px 5%;
+        }
+
+        .section-title {
+          font-size: 2.2rem;
+        }
+
+        .hero {
+          padding: 100px 5% 80px;
+        }
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        .hero p {
+          font-size: 1.1rem;
+        }
+        .hero::before {
+          width: 300px;
+          height: 300px;
+        }
+
+        .about-row,
+        .about-row.reverse {
+          flex-direction: column;
+          gap: 2.5rem;
+          margin-bottom: 3rem;
+          text-align: center;
+        }
+
+        .about-image {
+          order: -1;
+          width: 100%;
+        }
+
+        .about-content {
+          text-align: center;
+        }
+
+        .menu-grid {
+          grid-template-columns: 1fr;
+          max-width: 400px;
+        }
+
+        .team-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 2.5rem;
+        }
+
+        .contact-btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .footer-desc {
+          max-width: 100%;
+        }
+
+        .scroll-top {
+          bottom: 20px;
+          right: 20px;
+          width: 45px;
+          height: 45px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+        
+        .section-title {
+          font-size: 1.8rem;
+        }
+
+        .cta-button {
+          padding: 15px 35px;
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container navbar-container">
+        <a href="#home" class="logo">
+          <img
+            src="img/logo.png"
+            alt="Logo Pancake Souffle"
+            class="logo-img"
+            onerror="this.src='https://cdn-icons-png.flaticon.com/512/2917/2917995.png'"
+          />
+          <span class="logo-text">Pancake Souffle</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <a href="order.html" class="btn-order-nav" aria-label="Order Now">
+            <i class="fa-solid fa-cart-shopping"></i> <span>Order Now</span>
+          </a>
+
+          <div class="hamburger" aria-label="Menu Toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section id="home" class="hero">
+      <div class="container">
+        <h1 class="reveal">
+          Lembut, Manis,<br /><span>Bikin Good Mood!</span> <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 0.8em; color:#FFC107;"></i>
+        </h1>
+        <p class="reveal">
+          Rasakan sensasi pancake souffle yang meleleh di mulut. Dibuat dengan
+          cinta dan bahan premium untuk menemani harimu.
+        </p>
+        <div class="reveal">
+          <a href="#contact" class="cta-button">
+            Pesan Sekarang <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about-section section-padding">
+      <div class="container about-container">
+        <span class="section-subtitle reveal">Cerita Kami</span>
+        <h2 class="section-title reveal">Kenapa Pancake Souffle?</h2>
+
+        <div class="about-row reveal">
+          <div class="about-image">
+            <div
+              style="
+                background: #fff0f5;
+                border-radius: 20px;
+                height: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+              "
+            >
+              <img
+                src="img/about_1.png"
+                alt="Pembuatan Pancake"
+                style="
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: cover;
+                "
+                onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-whisk\' style=\'font-size:4rem; color:#F48FB1;\'></i>'"
+              />
+            </div>
+          </div>
+          <div class="about-content">
+            <h3>Berawal dari Ide Kecil</h3>
+            <p>
+              Semuanya bermula dari sebuah ide kecil. Kami bertiga ingin belajar
+              mandiri dan tidak terus bergantung pada orang tua. Dari keinginan
+              sederhana itulah, pada tahun 2025 kami mulai bereksperimen di
+              dapur kecil kami di Fakfak.
+            </p>
+            <p>
+              Perjalanan itu tidak instan. Banyak percobaan akhirnya
+              membawa kami pada satu resep yang kami banggakan. Teksturnya
+              ringan seperti awan, tidak amis, dan langsung lumer di mulut.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-row reverse reveal">
+          <div class="about-image">
+            <div
+              style="
+                background: #f9f5ec;
+                border-radius: 20px;
+                height: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+              "
+            >
+              <img
+                src="img/about_2.png"
+                alt="Bahan Premium"
+                style="
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: cover;
+                "
+                onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-heart\' style=\'font-size:4rem; color:#F48FB1;\'></i>'"
+              />
+            </div>
+          </div>
+          <div class="about-content">
+            <h3>Bahan Premium, Tanpa Kompromi</h3>
+            <p>
+              Kami percaya makanan enak berasal dari bahan terbaik. Pancake
+              Souffle hanya menggunakan telur segar pilihan, susu berkualitas
+              tinggi, dan tepung premium. Tanpa pengawet buatan.
+            </p>
+            <p>
+              Setiap pesanan dibuat dadakan (made to order) agar kamu selalu
+              mendapatkan kehangatan dan kelembutan maksimal.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="menu"
+      class="section-padding"
+      style="background-color: var(--secondary)"
+    >
+      <span class="section-subtitle reveal">Our Favorites</span>
+      <h2 class="section-title reveal">Menu Spesial <i class="fa-solid fa-utensils" style="font-size: 0.8em;"></i></h2>
+
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <div class="card-image-wrapper">
+            <span class="badge">Best Seller</span>
+            <div
+              style="
+                background: #ffd1dc;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <img
+                src="img/menu_strawbery.png"
+                alt="Pancake Stroberi"
+                class="menu-image"
+                onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-image\' style=\'font-size:3rem; opacity:0.5\'></i>'"
+              />
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Rasa Strawberry</h3>
+            <span class="price">Rp15.000</span>
+            <p style="margin-bottom: 15px;">Manis segar dengan saus stroberi asli dan krim lembut.</p>
+            <a href="order.html" class="btn-small">Pesan</a>
+          </div>
+        </div>
+
+        <div class="menu-card reveal">
+          <div class="card-image-wrapper">
+            <div
+              style="
+                background: #e0c0a8;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <img
+                src="img/menu_tiramisu.png"
+                alt="Pancake Tiramisu"
+                class="menu-image"
+                onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-image\' style=\'font-size:3rem; opacity:0.5\'></i>'"
+              />
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Rasa Tiramisu</h3>
+            <span class="price">Rp18.000</span>
+            <p style="margin-bottom: 15px;">Perpaduan klasik kopi espresso dan krim mascarpone.</p>
+            <a href="order.html" class="btn-small">Pesan</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="team section-padding">
+      <span class="section-subtitle reveal">Behind The Taste</span>
+      <h2 class="section-title reveal">Meet The Team <i class="fa-solid fa-users" style="font-size: 0.8em;"></i></h2>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="team-photo-wrapper">
+            <img
+              src="img/michael.png"
+              alt="Michael"
+              class="team-photo"
+              onerror="this.src='https://ui-avatars.com/api/?name=Michael&background=F48FB1&color=fff'"
+            />
+          </div>
+          <h3>Michael</h3>
+          <p class="team-role">Founder & Chef</p>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-photo-wrapper">
+            <img
+              src="img/gilang.jpeg"
+              alt="Gilang Arsy Zulkarnain"
+              class="team-photo"
+              onerror="this.src='https://ui-avatars.com/api/?name=Gilang&background=F48FB1&color=fff'"
+            />
+          </div>
+          <h3>Gilang Arsy Zulkarnain</h3>
+          <p class="team-role">Marketing & Chef</p>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-photo-wrapper">
+            <img
+              src="img/androu.jpeg"
+              alt="Androu Eka Rachmad"
+              class="team-photo"
+              onerror="this.src='https://ui-avatars.com/api/?name=Androu&background=F48FB1&color=fff'"
+            />
+          </div>
+          <h3>Androu Eka Rachmad</h3>
+          <p class="team-role">Operational</p>
+        </div>
+
+         <div class="team-card reveal">
+          <div class="team-photo-wrapper">
+            <img
+              src="img/ulfa.jpeg"
+              alt="Ulfa"
+              class="team-photo"
+              onerror="this.src='https://ui-avatars.com/api/?name=Ulfa&background=F48FB1&color=fff'"
+            />
+          </div>
+          <h3>Ulfa Sari Bouano</h3>
+          <p class="team-role">Chef Assistant</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" class="contact section-padding">
+      <div class="container reveal">
+        <h2>Siap Manjain Lidahmu? <i class="fa-solid fa-heart" style="color: #F48FB1;"></i></h2>
+        <p style="margin-bottom: 2rem; color: #666; font-size: 1.1rem;">
+          Klik tombol di bawah untuk order via WhatsApp atau kepoin Instagram
+          kami!
+        </p>
+        <div class="contact-buttons">
+          <a
+            href="https://www.instagram.com/pancakee_souffle?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-btn instagram"
+          >
+            <i class="fa-brands fa-instagram fa-lg"></i> Follow Instagram
+          </a>
+          <a
+            href="order.html"
+            class="contact-btn whatsapp"
+          >
+            <i class="fa-brands fa-whatsapp fa-lg"></i> Order WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          
+          <div class="footer-col">
+            <span class="footer-logo">Pancake Souffle</span>
+            <p class="footer-desc">
+              Menghadirkan kelembutan pancake Jepang otentik ke jantung kota Fakfak. Dibuat dengan cinta di setiap adukan.
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h4>Hubungi Kami</h4>
+            <ul class="contact-list">
+              <li>
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Jl. Pattimura, Fakfak, Papua Barat</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-envelope"></i>
+                <span>hello@pancakesouffle.id</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-phone"></i>
+                <span>+62 822-3873-8550</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Navigasi</h4>
+            <ul class="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#menu">Menu</a></li>
+              <li><a href="#team">Team</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="order.html">Order Now</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <hr class="footer-divider" />
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Pancake Souffle Team. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="scroll-top" id="scrollTop">
+      <i class="fa-solid fa-arrow-up"></i>
+    </div>
+
+    <script>
+      // Hamburger Menu Logic
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+
+        const spans = hamburger.querySelectorAll("span");
+        if (navMenu.classList.contains("active")) {
+          spans[0].style.transform = "rotate(45deg) translate(5px, 5px)";
+          spans[1].style.opacity = "0";
+          spans[2].style.transform = "rotate(-45deg) translate(7px, -6px)";
+        } else {
+          spans[0].style.transform = "none";
+          spans[1].style.opacity = "1";
+          spans[2].style.transform = "none";
+        }
+      });
+
+      document.querySelectorAll(".nav-menu a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("active");
+          const spans = hamburger.querySelectorAll("span");
+          spans[0].style.transform = "none";
+          spans[1].style.opacity = "1";
+          spans[2].style.transform = "none";
+        });
+      });
+
+      // Scroll Reveal Animation
+      window.addEventListener("scroll", reveal);
+
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+
+        for (var i = 0; i < reveals.length; i++) {
+          var windowheight = window.innerHeight;
+          var revealtop = reveals[i].getBoundingClientRect().top;
+          var revealpoint = 100;
+
+          if (revealtop < windowheight - revealpoint) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+
+      reveal();
+
+      // Navbar Scroll Effect
+      const navbar = document.querySelector('.navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Scroll to Top Button
+      const scrollTopBtn = document.getElementById('scrollTop');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    </script>
+  </body>
+</html>
